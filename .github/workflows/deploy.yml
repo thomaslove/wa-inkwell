@@ -30,8 +30,8 @@ jobs:
         with:
           provider: webdav
           provider_options: |
-            endpoint=${{ secrets.WEBDAV_URL }}
+            endpoint=${{ secrets.WEBDAV_ENDPOINT }}
             username=${{ secrets.WEBDAV_USERNAME }}
             password=${{ secrets.WEBDAV_PASSWORD }}
             root=/Theme_Overrides/whiteboard_maya_blue.v3.0/
-          include: "dist/**"
+          include: "_dist/**"
