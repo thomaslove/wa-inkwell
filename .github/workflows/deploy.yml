@@ -25,21 +25,13 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      # Install Curl
-      - name: Install rclone
-        run: sudo apt-get install -y rclone
-
-      - name: Configure rclone WebDAV
-        run: |
-          rclone config create webdav_webdav webdav \
-          url "${{ secrets.WEBDAV_URL }}" \
-          user "${{ secrets.WEBDAV_USERNAME }}" \
-          pass "${{ secrets.WEBDAV_PASSWORD }}"
-
-      # Upload the files via WebDAV into the correct theme in resources/Theme_Overrides directory
-      - name: Upload build directory to WebDAV
-        run: rclone copy ./build webdav_webdav:whiteboard_maya_blue.v3.0 --verbose
-        env:
-          WEBDAV_URL: ${{ secrets.WEBDAV_URL }}
-          WEBDAV_USERNAME: ${{ secrets.WEBDAV_USERNAME }}
-          WEBDAV_PASSWORD: ${{ secrets.WEBDAV_PASSWORD }}
+      - name: Upload to WebDAV
+        uses: bxb100/action-upload@main
+        with:
+          provider: webdav
+          provider_options: |
+            endpoint=${{ secrets.WEBDAV_URL }}
+            username=${{ secrets.WEBDAV_USERNAME }}
+            password=${{ secrets.WEBDAV_PASSWORD }}
+            root=/Theme_Overrides/whiteboard_maya_blue.v3.0/
+          include: "dist/**"
