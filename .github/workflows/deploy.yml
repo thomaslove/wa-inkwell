@@ -31,12 +31,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y cadaver
 
-      - name: Setup .netrc for authentication
-        env:
-          NETRC_FILE: ${{ secrets.NETRC_FILE }}
-        run: |
-          echo ${{ secrets.NETRC_FILE }} >> ~/.netrc
-          cat ~/.netrc
+      - name: Apply netrc creds with direct input
+        uses: little-core-labs/netrc-creds@master
+        with:
+          machine: ${{ secrets.WEBDAV_DOMAIN }}
+          login: ${{ secrets.WEBDAV_USERNAME }}
+          password: ${{ secrets.WEBDAV_PASSWORD }}
 
       - name: Generate cadaver commands again
         run: |
@@ -46,7 +46,7 @@ jobs:
           REMOTE_LOCATION="Theme_Overrides/whiteboard_maya_blue.v3.0/"
 
           # connect to the server
-          echo "open https://bistromath.wildapricot.org/resources" > $TEMP_COMMANDS
+          echo "open https://${{ secrets.WEBDAV_DOMAIN }}/resources" > $TEMP_COMMANDS
 
           # Loop through all files and directories in dist
           find dist -type f | while read -r file; do
