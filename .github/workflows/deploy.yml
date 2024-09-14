@@ -44,7 +44,7 @@ jobs:
       - name: Generate cadaver commands
         run: |
           # Create a temporary file to hold cadaver commands
-          TEMP_COMMANDS="cadaver_commands.txt"
+          TEMP_COMMANDS="cadaverrc.txt"
 
           REMOTE_LOCATION="Theme_Overrides/whiteboard_maya_blue.v3.0/"
 
@@ -68,9 +68,9 @@ jobs:
           cat $TEMP_COMMANDS
 
           # Run cadaver with the generated commands
-          cadaver -f $TEMP_COMMANDS
+          cadaver -r $TEMP_COMMANDS
 
       - name: Cleanup
         run: |
           rm ~/.netrc
-          rm cadaver_commands.txt
+          rm cadaverrc.txt
