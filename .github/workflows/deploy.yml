@@ -33,12 +33,10 @@ jobs:
 
       - name: Setup .netrc for authentication
         env:
-          WEBDAV_USERNAME: ${{ secrets.WEBDAV_USERNAME }}
-          WEBDAV_PASSWORD: ${{ secrets.WEBDAV_PASSWORD }}
+          NETRC_FILE: ${{ secrets.NETRC_FILE }}
         run: |
-          echo "machine bistromath.wildapricot.org" >> ~/.netrc
-          echo "    login ${{ secrets.WEBDAV_USERNAME }}" >> ~/.netrc
-          echo "    password ${{ secrets.WEBDAV_PASSWORD }}" >> ~/.netrc
+          echo ${{ secrets.NETRC_FILE }} >> ~/.netrc
+          cat ~/.netrc
 
       - name: Generate cadaver commands again
         run: |
