@@ -25,51 +25,13 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      # Install cadaver WebDAV client
-      - name: Install cadaver
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y cadaver
-
-      - name: Apply netrc creds with direct input
-        uses: little-core-labs/netrc-creds@master
+      - name: Upload to WebDAV
+        uses: bxb100/action-upload@main
         with:
-          machine: "bistromath.wildapricot.org"
-          login: ${{ secrets.WEBDAV_USERNAME }}
-          password: ${{ secrets.WEBDAV_PASSWORD }}
-
-      - name: Generate cadaver commands again
-        run: |
-          # Create a temporary file to hold cadaver commands
-          TEMP_COMMANDS="cadaverrc.txt"
-
-          cat ~/.netrc
-
-          REMOTE_LOCATION="Theme_Overrides/whiteboard_maya_blue.v3.0/"
-
-          # connect to the server
-          echo "open https://bistromath.wildapricot.org/resources" > $TEMP_COMMANDS
-
-          # Loop through all files and directories in dist
-          find dist -type f | while read -r file; do
-            # Prepare the local and remote paths
-            local_path="$file"
-            remote_path="${REMOTE_LOCATION}$(echo "$file" | sed 's|^dist/||')"
-            
-            # Generate cadaver command for each file
-            echo "put $local_path $remote_path" >> $TEMP_COMMANDS
-          done
-
-          # Add the 'bye' command to end the session
-          echo "bye" >> $TEMP_COMMANDS
-
-          # Print for the logs
-          cat $TEMP_COMMANDS
-
-          # Run cadaver with the generated commands
-          cadaver -r $TEMP_COMMANDS
-
-      - name: Cleanup
-        run: |
-          rm ~/.netrc
-          rm cadaverrc.txt
+          provider: webdav
+          provider_options: |
+            endpoint=bistromath.wildapricot.org
+            username=${{ secrets.WEBDAV_USERNAME }}
+            password=${{ secrets.WEBDAV_PASSWORD }}
+            root=/test/
+          include: "dist/**"
