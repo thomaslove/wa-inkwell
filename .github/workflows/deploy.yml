@@ -33,16 +33,17 @@ jobs:
 
       - name: Setup .netrc for authentication
         env:
+          WEBDAV_DOMAIN: ${{ secrets.WEBDAV_DOMAIN }}
           WEBDAV_USERNAME: ${{ secrets.WEBDAV_USERNAME }}
           WEBDAV_PASSWORD: ${{ secrets.WEBDAV_PASSWORD }}
         run: |
-          echo "default" >> ~/.netrc
+          echo "machine " >> ~/.netrc
           echo "login ${{ secrets.WEBDAV_USERNAME }}" >> ~/.netrc
           echo "password ${{ secrets.WEBDAV_PASSWORD }}" >> ~/.netrc
 
       - name: Generate cadaver commands again
         env:
-          WEBDAV_ENDPOINT: ${{ secrets.WEBDAV_ENDPOINT }}
+          WEBDAV_DOMAIN: ${{ secrets.WEBDAV_DOMAIN }}
         run: |
           # Create a temporary file to hold cadaver commands
           TEMP_COMMANDS="cadaverrc.txt"
@@ -50,7 +51,7 @@ jobs:
           REMOTE_LOCATION="Theme_Overrides/whiteboard_maya_blue.v3.0/"
 
           # connect to the server
-          echo "open ${WEBDAV_ENDPOINT}" > $TEMP_COMMANDS
+          echo "open https://${WEBDAV_DOMAIN}/resources" > $TEMP_COMMANDS
 
           # Loop through all files and directories in dist
           find dist -type f | while read -r file; do
