@@ -40,7 +40,7 @@ jobs:
           echo "login ${{ secrets.WEBDAV_USERNAME }}" >> ~/.netrc
           echo "password ${{ secrets.WEBDAV_PASSWORD }}" >> ~/.netrc
 
-      - name: Generate cadaver commands
+      - name: Generate cadaver commands again
         env:
           WEBDAV_ENDPOINT: ${{ secrets.WEBDAV_ENDPOINT }}
         run: |
