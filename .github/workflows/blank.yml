@@ -6,9 +6,9 @@ name: Deploy via WebDAV
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -35,11 +35,9 @@ jobs:
           WEBDAV_URL: ${{ secrets.WEBDAV_URL }}
           WEBDAV_USERNAME: ${{ secrets.WEBDAV_USERNAME }}
           WEBDAV_PASSWORD: ${{ secrets.WEBDAV_PASSWORD }}
-        run:
-          LOCAL_SOURCE="dist"
+        run: LOCAL_SOURCE="dist"
           WEBDAV_TARGET="whiteboard_maya_blue.v3.0"
           find $DIRECTORY -type f | while read FILE; do
-            echo "Uploading $FILE to $WEBDAV_URL/$WEBDAV_TARGET/$(basename "$FILE")"
-            curl --user "$WEBDAV_USERNAME:$WEBDAV_PASSWORD" -T "$FILE" "$WEBDAV_URL/$WEBDAV_TARGET/$(basename "$FILE")"
+          echo "Uploading $FILE to $WEBDAV_URL/$WEBDAV_TARGET/$(basename "$FILE")"
+          curl --user "$WEBDAV_USERNAME:$WEBDAV_PASSWORD" -T "$FILE" "$WEBDAV_URL/$WEBDAV_TARGET/$(basename "$FILE")"
           done
-        
