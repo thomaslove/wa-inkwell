@@ -1,0 +1,277 @@
+
+/****************************************************************************************************/
+/*	WaGadgetForum                                                                                     */
+/*		WaGadgetForumStateList                                                                             */
+/****************************************************************************************************/
+
+
+/* mode: WaGadgetForumStateList (forum summary) */
+/*****************************************************************************************************/
+.WaGadgetForumStateList {
+	.forumCategoryListOuterContainer { padding: 0;
+		.forumCategoryOuterContainer { margin: 0 0 50px 0; }
+	}
+	h5 { font-size: 24px; margin-bottom: 0px; color: #373737; }  // text "Uncategorized"
+	.forumListContainer {
+		table { table-layout: fixed;
+			td { padding: 10px 25px 10px 0px; height: auto;
+				&:first-child { padding-left: 25px; }
+			}
+			td.pageStateIconTD { width: 7%;
+				.pageStateIcon { width: 21px;
+					div {  }
+				}
+			}
+			td.threadTD { width: 45%;
+				.thread {
+					h4.boxHeaderTitle {  }
+				}
+			}
+			td.lastReplyTD { width: 25%;
+				.lastReply {
+					h4.boxHeaderTitle {  }
+				}
+			}
+			td.topicsCountTD { width: 11%; text-align: center;
+				.topicsCount { min-width: 68px;
+					h4.boxHeaderTitle {  }
+				}
+			}
+			td.repliesCountTD { width: 12%; text-align: center;
+				.repliesCount { min-width: 77px;
+					h4.boxHeaderTitle {  }
+				}
+			}
+		}
+		.boxHeaderOuterContainer {
+			table {
+				td { padding: 15px 25px 8px 0px; background: @ForumTableHeadingBg;
+					&:first-child { padding-left: 25px; }
+					h4 { font-size: 24px; font-weight: bold; color: @ForumTableHeadingColor; line-height: normal; }
+				}
+			}
+		}
+		.boxBodyOuterContainer {
+			table.forumListTable { border: none; table-layout: fixed;
+				tr.forumListRow {
+					td { border-top: none; border-bottom: none; }
+					td.pageStateIconTD { vertical-align: top; width: 7%;
+						.pageStateIcon { margin-top: 1px;
+							.anybodyIconDiv { display: inline-block; width: 21px; height: 20px; background: url(<$StaticModel.ThemeUrl$>/images/icon_set.png) 0 -2300px no-repeat; }
+							.memberIconDiv { display: inline-block; width: 21px; height: 20px; background: url(<$StaticModel.ThemeUrl$>/images/icon_set.png) 0 -2350px no-repeat; }
+							.adminIconDiv { display: inline-block; width: 21px; height: 20px; background: url(<$StaticModel.ThemeUrl$>/images/icon_set.png) 0 -2400px no-repeat; }
+						}
+					}
+					td.threadTD { vertical-align: top; width: 45%;
+						.thread {
+							a.forumTitle {  }
+							span.forumDescription {  }
+						}
+					}
+					td.lastReplyTD { width: 25%;
+						.lastReply {
+							a { font-style: italic; }
+							span {  }
+						}
+					}
+					td.topicsCountTD { width: 11%;
+						.topicsCount {  }
+					}
+					td.repliesCountTD { width: 12%;
+						.repliesCount {  }
+					}
+				}
+				tr.highlight,
+				tr.highlight td { background: @ForumTableHighlightBg; }
+			}
+		}
+	}
+}
+
+
+
+/*****************************************************************************************************/
+/*	Responsive                                                                                       */
+/*****************************************************************************************************/
+
+// state2
+@media only screen and (min-width:@state2-minwidth) and (max-width:@state2-maxwidth)
+{
+	.WaGadgetForumStateList {
+		.forumCategoryListOuterContainer {
+			.forumCategoryOuterContainer {  }
+		}
+		h5 {  }  // text "Uncategorized"
+		.forumListContainer {
+			table {
+				td { padding: 10px 10px 10px 0px; vertical-align: top;
+					&:first-child { padding-left: 10px; }
+					h4.boxHeaderTitle { font-size: 18px; }
+				}
+				td.pageStateIconTD {
+					.pageStateIcon {
+						div {  }
+					}
+				}
+				td.threadTD {
+					.thread {
+						h4.boxHeaderTitle {  }
+					}
+				}
+				td.lastReplyTD {
+					.lastReply {
+						h4.boxHeaderTitle {  }
+					}
+				}
+				td.topicsCountTD {
+					.topicsCount {
+						h4.boxHeaderTitle {  }
+					}
+				}
+				td.repliesCountTD {
+					.repliesCount {
+						h4.boxHeaderTitle {  }
+					}
+				}
+			}
+			.boxHeaderOuterContainer {
+				table {
+					td { padding: 15px 10px 8px 0px;
+						&:first-child { padding-left: 10px; }
+						h4 {  }
+					}
+				}
+			}
+			.boxBodyOuterContainer {
+				table.forumListTable {
+					tr.forumListRow {
+						td {  }
+						td.pageStateIconTD {
+							.pageStateIcon {
+								.anybodyIconDiv {  }
+								.memberIconDiv {  }
+								.adminIconDiv {  }
+							}
+						}
+						td.threadTD {
+							.thread {
+								a.forumTitle {  }
+								span.forumDescription {  }
+							}
+						}
+						td.lastReplyTD {
+							.lastReply {
+								a { }
+								span {  }
+							}
+						}
+						td.topicsCountTD {
+							.topicsCount {  }
+						}
+						td.repliesCountTD {
+							.repliesCount {  }
+						}
+					}
+					tr.highlight td {  }
+				}
+			}
+		}
+	}
+}
+
+
+// state3
+@media only screen and (max-width:@state3-maxwidth)
+{
+	.WaGadgetForumStateList {
+		.forumCategoryListOuterContainer {
+			.forumCategoryOuterContainer { margin-bottom: 30px }
+		}
+		h5 {  }  // text "Uncategorized"
+		.forumListContainer {
+			&:after { content: ""; display: block; clear: both; height: 0; font-size: 0; }
+			table { display: block; width: 100%; float: left;
+				tbody { display: block; width: 100%; float: left; }
+				tr { display: block; width: auto; float: left; }
+				td { padding: 10px 10px 10px 0px; vertical-align: top; display: block;
+					&:first-child { padding-left: 0px; }
+					h4.boxHeaderTitle { font-size: 20px; }
+				}
+				td.pageStateIconTD { width: 20px; float: left;
+					.pageStateIcon {
+						div {  }
+					}
+				}
+				td.threadTD { width: auto; overflow: hidden; padding-right: 0;
+					.thread {
+						h4.boxHeaderTitle {  }
+					}
+				}
+				td.lastReplyTD { clear: both;
+					.lastReply {
+						h4.boxHeaderTitle {  }
+					}
+				}
+				td.topicsCountTD {
+					.topicsCount {
+						h4.boxHeaderTitle {  }
+					}
+				}
+				td.repliesCountTD {
+					.repliesCount {
+						h4.boxHeaderTitle {  }
+					}
+				}
+			}
+			.boxHeaderOuterContainer { display: none;
+				table {
+					td { padding: 15px 10px 8px 0px;
+						&:first-child { padding-left: 10px; }
+						h4 {  }
+					}
+				}
+			}
+			.boxBodyOuterContainer {
+				table.forumListTable {
+					tr.forumListRow { overflow: hidden; padding: 15px 0 15px 30px;
+						&:before { content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .";
+							display: block; height: 0; overflow: hidden; visibility: hidden;
+						}
+						td {  }
+						td.pageStateIconTD { width: 20px; padding: 0 10px 0 0; margin-left: -30px;
+							.pageStateIcon {
+								& > * { vertical-align: top; }
+								.anybodyIconDiv {  }
+								.memberIconDiv {  }
+								.adminIconDiv {  }
+							}
+						}
+						td.threadTD { width: 100%; float: left; padding: 0 0 6px 0;
+							.thread {
+								a.forumTitle {  }
+								span.forumDescription {  }
+							}
+						}
+						td.lastReplyTD { width: 100%; float: left; clear: both; font-size: 13px; margin: 0 0 0 0px; padding: 0 0 7px 0;
+							.lastReply {
+								a { }
+								span { display: inline; }
+							}
+						}
+						td.topicsCountTD { width: auto; padding: 0; text-align: left; float: left;
+							.topicsCount { min-width: 0; width: auto; .iconLink.comment;
+								&:before { margin: 1px 3px 0 0; }
+							}
+						}
+						td.repliesCountTD { width: auto; padding: 0; text-align: left; float: left; margin-left: 20px;
+							.repliesCount { min-width: 0; width: auto; .iconLink.reply;
+								&:before { margin: 2px 3px 0 0; }
+							}
+						}
+					}
+					tr.highlight { margin: 0 -10px; padding: 15px 10px 15px 40px; }
+				}
+			}
+		}
+	}
+}
