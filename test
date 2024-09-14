@@ -1,0 +1,3 @@
+open https://bistromath.wildapricot.org/resources
+put dist/Styles/layout.less Theme_Overrides/whiteboard_maya_blue.v3.0/Styles/layout.less
+bye

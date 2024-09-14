@@ -34,7 +34,7 @@ jobs:
       - name: Apply netrc creds with direct input
         uses: little-core-labs/netrc-creds@master
         with:
-          machine: ${{ secrets.WEBDAV_DOMAIN }}
+          machine: "bistromath.wildapricot.org"
           login: ${{ secrets.WEBDAV_USERNAME }}
           password: ${{ secrets.WEBDAV_PASSWORD }}
 
@@ -43,10 +43,12 @@ jobs:
           # Create a temporary file to hold cadaver commands
           TEMP_COMMANDS="cadaverrc.txt"
 
+          cat ~/.netrc
+
           REMOTE_LOCATION="Theme_Overrides/whiteboard_maya_blue.v3.0/"
 
           # connect to the server
-          echo "open https://${{ secrets.WEBDAV_DOMAIN }}/resources" > $TEMP_COMMANDS
+          echo "open https://bistromath.wildapricot.org/resources" > $TEMP_COMMANDS
 
           # Loop through all files and directories in dist
           find dist -type f | while read -r file; do
