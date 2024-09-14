@@ -25,13 +25,52 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      - name: Upload to WebDAV
-        uses: bxb100/action-upload@main
-        with:
-          provider: webdav
-          provider_options: |
-            endpoint=${{ secrets.WEBDAV_ENDPOINT }}
-            username=${{ secrets.WEBDAV_USERNAME }}
-            password=${{ secrets.WEBDAV_PASSWORD }}
-            root=/test/
-          include: "dist/**"
+      # Install cadaver WebDAV client
+      - name: Install cadaver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cadaver
+
+      - name: Setup .netrc for authentication
+        run: |
+          echo "machine ${{ secrets.WEBDAV_ENDPOINT }}" >> ~/.netrc
+          echo "login ${{ secrets.WEBDAV_USERNAME }}" >> ~/.netrc
+          echo "password ${{ secrets.WEBDAV_PASSWORD }}" >> ~/.netrc
+        env:
+          WEBDAV_ENDPOINT: ${{ secrets.WEBDAV_ENDPOINT }}
+          WEBDAV_USERNAME: ${{ secrets.WEBDAV_USERNAME }}
+          WEBDAV_PASSWORD: ${{ secrets.WEBDAV_PASSWORD }}
+
+      - name: Generate cadaver commands
+        run: |
+          # Create a temporary file to hold cadaver commands
+          TEMP_COMMANDS="cadaver_commands.txt"
+
+          REMOTE_LOCATION="Theme_Overrides/whiteboard_maya_blue.v3.0/"
+
+          # connect to the server
+          echo "open ${WEBDAV_ENDPOINT}" > $TEMP_COMMANDS
+
+          # Loop through all files and directories in dist
+          find dist -type f | while read -r file; do
+            # Prepare the local and remote paths
+            local_path="$file"
+            remote_path="${REMOTE_LOCATION}$(echo "$file" | sed 's|^dist/||')"
+            
+            # Generate cadaver command for each file
+            echo "put $local_path $remote_path" >> $TEMP_COMMANDS
+          done
+
+          # Add the 'bye' command to end the session
+          echo "bye" >> $TEMP_COMMANDS
+
+          # Print for the logs
+          cat $TEMP_COMMANDS
+
+          # Run cadaver with the generated commands
+          cadaver -f $TEMP_COMMANDS
+
+      - name: Cleanup
+        run: |
+          rm ~/.netrc
+          rm cadaver_commands.txt
