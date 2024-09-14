@@ -37,7 +37,7 @@ jobs:
           WEBDAV_USERNAME: ${{ secrets.WEBDAV_USERNAME }}
           WEBDAV_PASSWORD: ${{ secrets.WEBDAV_PASSWORD }}
         run: |
-          echo "machine " >> ~/.netrc
+          echo "machine ${{ secrets.WEBDAV_DOMAIN }}" >> ~/.netrc
           echo "login ${{ secrets.WEBDAV_USERNAME }}" >> ~/.netrc
           echo "password ${{ secrets.WEBDAV_PASSWORD }}" >> ~/.netrc
 
@@ -51,7 +51,7 @@ jobs:
           REMOTE_LOCATION="Theme_Overrides/whiteboard_maya_blue.v3.0/"
 
           # connect to the server
-          echo "open https://${WEBDAV_DOMAIN}/resources" > $TEMP_COMMANDS
+          echo "open https://${{ secrets.WEBDAV_DOMAIN }}/resources" > $TEMP_COMMANDS
 
           # Loop through all files and directories in dist
           find dist -type f | while read -r file; do
