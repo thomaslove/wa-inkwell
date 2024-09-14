@@ -32,16 +32,18 @@ jobs:
           sudo apt-get install -y cadaver
 
       - name: Setup .netrc for authentication
-        run: |
-          echo "machine ${{ secrets.WEBDAV_ENDPOINT }}" >> ~/.netrc
-          echo "login ${{ secrets.WEBDAV_USERNAME }}" >> ~/.netrc
-          echo "password ${{ secrets.WEBDAV_PASSWORD }}" >> ~/.netrc
         env:
           WEBDAV_ENDPOINT: ${{ secrets.WEBDAV_ENDPOINT }}
           WEBDAV_USERNAME: ${{ secrets.WEBDAV_USERNAME }}
           WEBDAV_PASSWORD: ${{ secrets.WEBDAV_PASSWORD }}
+        run: |
+          echo "machine ${{ secrets.WEBDAV_ENDPOINT }}" >> ~/.netrc
+          echo "login ${{ secrets.WEBDAV_USERNAME }}" >> ~/.netrc
+          echo "password ${{ secrets.WEBDAV_PASSWORD }}" >> ~/.netrc
 
       - name: Generate cadaver commands
+        env:
+          WEBDAV_ENDPOINT: ${{ secrets.WEBDAV_ENDPOINT }}
         run: |
           # Create a temporary file to hold cadaver commands
           TEMP_COMMANDS="cadaverrc.txt"
